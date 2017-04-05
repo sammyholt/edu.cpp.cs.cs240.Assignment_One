@@ -2,6 +2,15 @@ package edu.cpp.cs.cs240.Assignment_One;
 
 import java.util.ArrayList;
 
+/**
+ * The Dispenser is the main class of the program.  The dispenser holds all the 
+ * currency objects and has methods for manipulating the data it holds.  It can also
+ * display that data.
+ * 
+ * @author Samuel Holt
+ *
+ */
+
 public class Dispenser {
 	
 	/**
@@ -33,12 +42,7 @@ public class Dispenser {
 	 * The default constructor.
 	 */
 	public Dispenser(){
-		this.numberQuarters = 0;
-		this.numberDimes = 0;
-		this.numberNickles = 0;
-		this.numberPennies = 0;
-		this.billsAndCoins = new ArrayList<Currency>();
-		this.updateCoins();
+		this(new ArrayList<Currency>());
 	}
 	
 	/**
@@ -56,7 +60,7 @@ public class Dispenser {
 	/**
 	 * Add a currency item to the dispenser.
 	 * 
-	 * @param c
+	 * @param c - A currency object
 	 */
 	public void addCurrency(Currency c){
 		this.billsAndCoins.add(c);
@@ -65,7 +69,8 @@ public class Dispenser {
 	
 	/**
 	 * This method updates the amount of coins of each type which can represent the total value
-	 * inside the dispenser.
+	 * inside the dispenser. It should be called any time a dispenser is created or a currency item is added to
+	 * the dispenser.
 	 * 
 	 * @param value - Total unit value inside the dispenser
 	 */

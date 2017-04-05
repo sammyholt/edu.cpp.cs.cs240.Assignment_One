@@ -1,5 +1,12 @@
 package edu.cpp.cs.cs240.Assignment_One;
 
+/**
+ * This class represents a currency item.  A currency item has a name
+ * and a value.  It also has some methods for modifying and displaying these fields.
+ * 
+ * @author Samuel Holt
+ *
+ */
 public class Currency {
 	
 	/**
@@ -78,6 +85,10 @@ public class Currency {
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
+	 */
+	/**
+	 * This method returns a string representation of the currency object.  It lists the name of the currency
+	 * and the unit value of the currency.
 	 */
 	@Override
 	public String toString() {
