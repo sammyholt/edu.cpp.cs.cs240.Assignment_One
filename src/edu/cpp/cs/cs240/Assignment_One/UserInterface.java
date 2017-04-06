@@ -10,7 +10,6 @@ import java.util.Scanner;
  * @author Samuel Holt
  *
  */
-
 public class UserInterface {
 	
 	/**

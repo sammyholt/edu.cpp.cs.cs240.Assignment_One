@@ -7,7 +7,6 @@ package edu.cpp.cs.cs240.Assignment_One;
  * @author Samuel Holt
  *
  */
-
 public class App {
 	
 	public static void main(String[] args){

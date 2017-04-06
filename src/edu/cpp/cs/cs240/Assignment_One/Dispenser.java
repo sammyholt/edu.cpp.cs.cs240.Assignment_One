@@ -10,7 +10,6 @@ import java.util.ArrayList;
  * @author Samuel Holt
  *
  */
-
 public class Dispenser {
 	
 	/**
@@ -82,13 +81,13 @@ public class Dispenser {
 		this.numberNickles = 0;
 		this.numberPennies = 0;
 		while(tempValue > 0){
-			if(tempValue % 25 == 0){
+			if(tempValue >= 25){
 				tempValue -= 25;
 				this.numberQuarters += 1;
-			}else if(tempValue % 10 == 0){
+			}else if(tempValue >= 10){
 				tempValue -= 10;
 				this.numberDimes += 1;
-			}else if(tempValue % 5 == 0){
+			}else if(tempValue >= 5){
 				tempValue -= 5;
 				this.numberNickles += 1;
 			}else{
