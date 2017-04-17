@@ -28,28 +28,6 @@ public class UserInterface {
 	private Scanner keyboard = null;
 	
 	/**
-	 * This array holds all the valid options for input.
-	 */
-	private String[] allowedInputs = {"$1", "$5", "$10", "$100", "$500", "PENNY", "NICKLE", "DIME", "QUARTER", "QUIT"};
-	
-	/**
-	 * All the possible "bill" currencies.
-	 */
-	private Currency dollar = new Currency(100, "$1");
-	private Currency fiveDollar = new Currency(500, "$5");
-	private Currency tenDollar = new Currency(1000, "$10");
-	private Currency hundredDollar = new Currency(10000, "$100");
-	private Currency fiveHundredDollar = new Currency(50000, "$500");
-	
-	/**
-	 * All the possible "coin" currencies.
-	 */
-	private Currency penny = new Currency(1, "Penny");
-	private Currency nickle = new Currency(5, "Nickle");
-	private Currency dime = new Currency(10, "Dime");
-	private Currency quarter = new Currency(25, "Quarter");
-	
-	/**
 	 * Default constructor.
 	 */
 	public UserInterface(){
@@ -71,90 +49,50 @@ public class UserInterface {
 	 */
 	public void mainLoop(){
 		System.out.println(welcomeMessage);
-		this.enterCurrency();
+		this.addToDispenser();
 		System.out.println(dispenser);
 	}
 	
 	/**
-	 * This loop will allow currency items to be entered into the dispenser until the user quits.
+	 * This method will allow the user to enter currency as many times as they
+	 * want until they enter -1 to quit entering currency.  The method will
+	 * add new currency objects to the dispenser based on the input from the user.
 	 */
-	private void enterCurrency(){
-		String input = null;
+	private void addToDispenser(){
+		boolean quit = false;
+		
 		do{
-			input = this.getNextChoice();
-			switch(input){
-				case "$1":
-					dispenser.addCurrency(dollar);
-					break;
-				case "$5":
-					dispenser.addCurrency(fiveDollar);
-					break;
-				case "$10":
-					dispenser.addCurrency(tenDollar);
-					break;
-				case "$100":
-					dispenser.addCurrency(hundredDollar);
-					break;
-				case "$500":
-					dispenser.addCurrency(fiveHundredDollar);
-					break;
-				case "PENNY":
-					dispenser.addCurrency(penny);
-					break;
-				case "NICKLE":
-					dispenser.addCurrency(nickle);
-					break;
-				case "DIME":
-					dispenser.addCurrency(dime);
-					break;
-				case "QUARTER":
-					dispenser.addCurrency(quarter);
-					break;
-				default:
-					break;
+			double enteredAmount = this.getNextAmount();
+			if(enteredAmount == -1){
+				quit = true;
+			}else{
+				double value = enteredAmount * 100;
+				dispenser.addCurrency(new Currency((int)value, "Custom Amount"));
 			}
-		}while(!input.equals("QUIT"));
+		}while(!quit);
 	}
 	
 	/**
-	 * This method returns a String representation of the next input from the user.
-	 * It will either represent the type of currency to add or a signal that
-	 * they are done entering money.
+	 * This method asks the user to input an amount of currency in "Dollars and Cents" format.  For example,
+	 * Twelve dollars and thirty cents should be entered as "12.30".  The method will also validate that the input is in 
+	 * the correct format and will reject any input which is not in the expected format.
 	 * 
-	 * The method will also check that the user input is a valid choice.
-	 * 
+	 * @return An amount of currency in the traditional "Dollars and Cents" format.
 	 */
-	private String getNextChoice(){
-		String nextChoice = null;
-		boolean valid = false;
-		System.out.print("Enter a currency or quit. Valid inputs are $1, $5, $10, $100, $500, Penny, Nickle, Dime, Quarter, Quit: ");
+	private double getNextAmount(){
+		double nextAmount = 0.0;
+		boolean invalid = true;
+		
 		do{
-			nextChoice = keyboard.next();
-			if(contains(allowedInputs, nextChoice.toUpperCase())){
-				valid = true;
+			System.out.print("Enter an amount (ex: 12.15) or enter -1 to quit: ");
+			try{
+				nextAmount = Double.parseDouble(keyboard.next());
+				invalid = false;
+			}catch(NumberFormatException e){
+				System.out.println("Invalid input format! Expected format is in standard \"Dollars and Cents\" format (eg 12.15).");
 			}
 			
-			if(!valid){
-				System.out.print("Invalid choice! Try again: ");
-			}
-		}while(!valid);
-		return nextChoice.toUpperCase();
+		}while(invalid);
+		return nextAmount;
 	}
-	
-	/**
-	 * This method determines if a string is inside a string array.
-	 * 
-	 * @param array - An array of strings
-	 * @param item - A string to look for
-	 * @return True if the string is found.  False if the string is not found.
-	 */
-	private boolean contains(String[] array, String item){
-		for(String a : array){
-			if(a.equals(item)){
-				return true;
-			}
-		}
-		return false;
-	}
-
 }
